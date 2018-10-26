@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="XCycleRollingView">
+
+        <!--自动滚动-->
+        <attr name="isAutoScroll" format="boolean" />
+        <!--自动滚动间隔-->
+        <attr name="autoScrollInterval" format="integer|reference" />
+
+    </declare-styleable>
+
+</resources>

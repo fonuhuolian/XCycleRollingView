@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ViewFlipper xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/scrollView"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:inAnimation="@anim/x_cycle_roll_anim_come_in"
+    android:outAnimation="@anim/x_cycle_roll_anim_get_out" />
