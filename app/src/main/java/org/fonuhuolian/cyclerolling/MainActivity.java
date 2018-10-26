@@ -2,7 +2,6 @@ package org.fonuhuolian.cyclerolling;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.view.LayoutInflater;
 import android.view.View;
 
 import org.fonuhuolian.cyclerollingview.XCycleRollingView;
@@ -19,11 +18,9 @@ public class MainActivity extends AppCompatActivity {
 
         for (int i = 0; i < 5; i++) {
 
-            View inflate = LayoutInflater.from(this).inflate(R.layout.a, null);
+            View inflate = View.inflate(this, R.layout.a, null);
 
             view.addItemView(inflate);
         }
-
-        view.initialise();
     }
 }

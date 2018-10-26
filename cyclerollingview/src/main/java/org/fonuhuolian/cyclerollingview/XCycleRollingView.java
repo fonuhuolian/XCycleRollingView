@@ -30,6 +30,9 @@ public class XCycleRollingView extends RelativeLayout {
 
         LayoutInflater.from(context).inflate(R.layout.x_cycle_rolling_layout, this, true);
         flipper = (ViewFlipper) findViewById(R.id.scrollView);
+
+        flipper.setAutoStart(isAutoScroll);
+        flipper.setFlipInterval(autoScrollInterval);
     }
 
     /**
@@ -51,12 +54,6 @@ public class XCycleRollingView extends RelativeLayout {
         return this;
     }
 
-
-    public XCycleRollingView initialise() {
-        flipper.setAutoStart(isAutoScroll);
-        flipper.setFlipInterval(autoScrollInterval);
-        return this;
-    }
 
     public XCycleRollingView clearAllViews() {
         flipper.removeAllViews();
