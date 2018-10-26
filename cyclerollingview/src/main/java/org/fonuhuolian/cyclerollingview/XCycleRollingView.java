@@ -56,6 +56,7 @@ public class XCycleRollingView extends RelativeLayout {
 
 
     public XCycleRollingView clearAllViews() {
+        flipper.stopFlipping();
         flipper.removeAllViews();
         return this;
     }
