@@ -26,7 +26,6 @@ public class MainActivity extends AppCompatActivity {
             xv.addItemView(inflate);
         }
 
-        xv.startAnim();
     }
 
     public void btn(View view) {
@@ -37,6 +36,5 @@ public class MainActivity extends AppCompatActivity {
             xv.addItemView(inflate);
         }
 
-        xv.startAnim();
     }
 }

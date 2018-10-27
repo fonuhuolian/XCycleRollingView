@@ -1,7 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ViewFlipper xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/scrollView"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:inAnimation="@anim/x_cycle_roll_anim_come_in"
-    android:outAnimation="@anim/x_cycle_roll_anim_get_out" />
+    android:orientation="vertical">
+
+
+    <ViewFlipper
+        android:id="@+id/scrollView1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inAnimation="@anim/x_cycle_roll_anim_come_in"
+        android:outAnimation="@anim/x_cycle_roll_anim_get_out" />
+
+    <ViewFlipper
+        android:id="@+id/scrollView2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inAnimation="@anim/x_cycle_roll_anim_come_in"
+        android:outAnimation="@anim/x_cycle_roll_anim_get_out"
+        android:visibility="gone" />
+
+</LinearLayout>

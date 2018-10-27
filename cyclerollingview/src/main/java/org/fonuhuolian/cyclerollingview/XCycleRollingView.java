@@ -2,42 +2,21 @@ package org.fonuhuolian.cyclerollingview;
 
 import android.content.Context;
 import android.content.res.TypedArray;
-import android.os.Handler;
-import android.os.Message;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.ViewFlipper;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class XCycleRollingView extends RelativeLayout {
 
 
     private int autoScrollInterval = 2000;
-    private ViewFlipper flipper;
+    private ViewFlipper flipper1;
+    private ViewFlipper flipper2;
 
-    private boolean isFirst = true;
-    private boolean isCanAdd = false;
-    private boolean isAlreadyAdd = false;
-    private List<View> list = new ArrayList<>();
+    private boolean isVisiableFlipper1 = true;
 
-    private Handler handler = new Handler() {
-
-        @Override
-        public void handleMessage(Message msg) {
-            super.handleMessage(msg);
-
-            if (msg.what == 1) {
-                isCanAdd = true;
-
-                if (!isAlreadyAdd)
-                    startAnims();
-            }
-        }
-    };
 
     public XCycleRollingView(Context context) {
         this(context, null);
@@ -53,10 +32,13 @@ public class XCycleRollingView extends RelativeLayout {
         getAttrs(context, attrs);
 
         LayoutInflater.from(context).inflate(R.layout.x_cycle_rolling_layout, this, true);
-        flipper = (ViewFlipper) findViewById(R.id.scrollView);
+        flipper1 = (ViewFlipper) findViewById(R.id.scrollView1);
+        flipper2 = (ViewFlipper) findViewById(R.id.scrollView2);
 
-        flipper.setAutoStart(true);
-        flipper.setFlipInterval(autoScrollInterval);
+        flipper1.setAutoStart(true);
+        flipper1.setFlipInterval(autoScrollInterval);
+        flipper2.setAutoStart(true);
+        flipper2.setFlipInterval(autoScrollInterval);
     }
 
     /**
@@ -73,51 +55,28 @@ public class XCycleRollingView extends RelativeLayout {
 
 
     public XCycleRollingView addItemView(View view) {
-        list.add(view);
+        if (isVisiableFlipper1)
+            flipper1.addView(view);
+        else
+            flipper2.addView(view);
         return this;
-    }
-
-    public XCycleRollingView startAnim() {
-
-        if (isFirst) {
-
-            for (int i = 0; i < list.size(); i++) {
-                flipper.addView(list.get(i));
-            }
-
-            isFirst = false;
-        }
-
-
-        // 防止绘制view过慢导致handler加入view失败
-        if (isCanAdd)
-            startAnims();
-
-        return this;
-    }
-
-    private void startAnims() {
-
-        isAlreadyAdd = true;
-
-        for (int i = 0; i < list.size(); i++) {
-            flipper.addView(list.get(i));
-        }
     }
 
 
     public XCycleRollingView clearAllViews() {
 
-        if (isFirst)
-            return this;
+        flipper1.removeAllViews();
+        flipper2.removeAllViews();
 
-        isCanAdd = false;
-        isAlreadyAdd = false;
-        flipper.removeAllViews();
-        list.clear();
-
-        handler.removeCallbacksAndMessages(null);
-        handler.sendEmptyMessageDelayed(1, 999);
+        if (isVisiableFlipper1) {
+            flipper1.setVisibility(GONE);
+            flipper2.setVisibility(VISIBLE);
+            isVisiableFlipper1 = false;
+        } else {
+            flipper1.setVisibility(VISIBLE);
+            flipper2.setVisibility(GONE);
+            isVisiableFlipper1 = true;
+        }
 
         return this;
     }
