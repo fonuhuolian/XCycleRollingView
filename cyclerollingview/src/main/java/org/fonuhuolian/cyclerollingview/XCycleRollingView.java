@@ -108,10 +108,13 @@ public class XCycleRollingView extends RelativeLayout {
 
     public XCycleRollingView clearAllViews() {
 
-        flipper.removeAllViews();
-        list.clear();
+        if (isFirst)
+            return this;
+
         isCanAdd = false;
         isAlreadyAdd = false;
+        flipper.removeAllViews();
+        list.clear();
 
         handler.removeCallbacksAndMessages(null);
         handler.sendEmptyMessageDelayed(1, 999);

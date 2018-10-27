@@ -17,6 +17,8 @@ public class MainActivity extends AppCompatActivity {
 
         xv = (XCycleRollingView) findViewById(R.id.xv);
 
+        xv.clearAllViews();
+
         for (int i = 0; i < 5; i++) {
 
             View inflate = View.inflate(this, R.layout.a, null);
