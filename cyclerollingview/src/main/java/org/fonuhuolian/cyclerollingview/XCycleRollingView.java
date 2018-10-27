@@ -2,18 +2,37 @@ package org.fonuhuolian.cyclerollingview;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.os.Handler;
+import android.os.Message;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.ViewFlipper;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class XCycleRollingView extends RelativeLayout {
 
 
-    private boolean isAutoScroll = false;
     private int autoScrollInterval = 2000;
     private ViewFlipper flipper;
+
+    private boolean isFirst = true;
+    private List<View> list = new ArrayList<>();
+
+    private Handler handler = new Handler() {
+
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+
+            if (msg.what == 1) {
+                XCycleRollingView.this.startAnims();
+            }
+        }
+    };
 
     public XCycleRollingView(Context context) {
         this(context, null);
@@ -31,7 +50,7 @@ public class XCycleRollingView extends RelativeLayout {
         LayoutInflater.from(context).inflate(R.layout.x_cycle_rolling_layout, this, true);
         flipper = (ViewFlipper) findViewById(R.id.scrollView);
 
-        flipper.setAutoStart(isAutoScroll);
+        flipper.setAutoStart(true);
         flipper.setFlipInterval(autoScrollInterval);
     }
 
@@ -44,31 +63,46 @@ public class XCycleRollingView extends RelativeLayout {
     private void getAttrs(Context context, AttributeSet attrs) {
         TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.XCycleRollingView);
         autoScrollInterval = ta.getInteger(R.styleable.XCycleRollingView_autoScrollInterval, autoScrollInterval);
-        isAutoScroll = ta.getBoolean(R.styleable.XCycleRollingView_isAutoScroll, isAutoScroll);
         ta.recycle();
     }
 
 
     public XCycleRollingView addItemView(View view) {
-        flipper.addView(view);
+        list.add(view);
         return this;
+    }
+
+    public XCycleRollingView startAnim() {
+
+        if (isFirst) {
+
+            for (int i = 0; i < list.size(); i++) {
+                flipper.addView(list.get(i));
+            }
+
+            isFirst = false;
+        }
+
+        return this;
+    }
+
+    private void startAnims() {
+
+        for (int i = 0; i < list.size(); i++) {
+            flipper.addView(list.get(i));
+        }
     }
 
 
     public XCycleRollingView clearAllViews() {
 
         flipper.removeAllViews();
+        list.clear();
 
-        if (flipper.getOutAnimation().hasStarted()) {
-            flipper.getOutAnimation().cancel();
-        }
-        if (flipper.getInAnimation().hasStarted()) {
-            flipper.getInAnimation().cancel();
-        }
+        handler.removeCallbacksAndMessages(null);
+        handler.sendEmptyMessageDelayed(1, 999);
 
-        flipper.startFlipping();
         return this;
     }
-
 
 }
