@@ -20,6 +20,8 @@ public class XCycleRollingView extends RelativeLayout {
     private ViewFlipper flipper;
 
     private boolean isFirst = true;
+    private boolean isCanAdd = false;
+    private boolean isAlreadyAdd = false;
     private List<View> list = new ArrayList<>();
 
     private Handler handler = new Handler() {
@@ -29,7 +31,10 @@ public class XCycleRollingView extends RelativeLayout {
             super.handleMessage(msg);
 
             if (msg.what == 1) {
-                XCycleRollingView.this.startAnims();
+                isCanAdd = true;
+
+                if (!isAlreadyAdd)
+                    startAnims();
             }
         }
     };
@@ -83,10 +88,17 @@ public class XCycleRollingView extends RelativeLayout {
             isFirst = false;
         }
 
+
+        // 防止绘制view过慢导致handler加入view失败
+        if (isCanAdd)
+            startAnims();
+
         return this;
     }
 
     private void startAnims() {
+
+        isAlreadyAdd = true;
 
         for (int i = 0; i < list.size(); i++) {
             flipper.addView(list.get(i));
@@ -98,6 +110,8 @@ public class XCycleRollingView extends RelativeLayout {
 
         flipper.removeAllViews();
         list.clear();
+        isCanAdd = false;
+        isAlreadyAdd = false;
 
         handler.removeCallbacksAndMessages(null);
         handler.sendEmptyMessageDelayed(1, 999);
