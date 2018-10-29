@@ -81,4 +81,15 @@ public class XCycleRollingView extends RelativeLayout {
         return this;
     }
 
+
+    public void onResume() {
+        flipper1.startFlipping();
+        flipper2.startFlipping();
+    }
+
+    public void onPause() {
+        flipper1.stopFlipping();
+        flipper2.stopFlipping();
+    }
+
 }
