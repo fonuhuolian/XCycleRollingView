@@ -54,4 +54,4 @@ xCycleRollingView.onPause();
 
 > 效果
 
-![效果](https://github.com/fonuhuolian/XCycleRollingView/blob/master/screenshot/a.png?raw=true)
+![效果](https://github.com/fonuhuolian/XCycleRollingView/blob/master/screenshot/a.jpg?raw=true)
