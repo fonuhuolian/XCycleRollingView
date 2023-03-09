@@ -55,10 +55,19 @@ public class XCycleRollingView extends RelativeLayout {
 
 
     public XCycleRollingView addItemView(View view) {
-        if (isVisiableFlipper1)
+        if (isVisiableFlipper1) {
             flipper1.addView(view);
-        else
+            if (flipper1.getChildCount() > 1)
+                flipper1.startFlipping();
+            else
+                flipper1.stopFlipping();
+        } else {
             flipper2.addView(view);
+            if (flipper2.getChildCount() > 1)
+                flipper2.startFlipping();
+            else
+                flipper2.stopFlipping();
+        }
         return this;
     }
 
@@ -83,8 +92,10 @@ public class XCycleRollingView extends RelativeLayout {
 
 
     public void onResume() {
-        flipper1.startFlipping();
-        flipper2.startFlipping();
+        if (flipper1.getChildCount() > 1)
+            flipper1.startFlipping();
+        if (flipper2.getChildCount() > 1)
+            flipper2.startFlipping();
     }
 
     public void onPause() {
